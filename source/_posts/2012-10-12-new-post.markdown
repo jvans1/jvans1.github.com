@@ -1,0 +1,37 @@
+---
+layout: post
+title: "5 Ways to get into the Flatironschool"
+date: 2012-10-12 14:02
+comments: true
+published: false
+categories: 
+---
+
+
+
+###5. Know where you want to go
+Coding opens up a lot of doors. The Flatiron School is just as passionate about getting you a job as they are about teaching you to code. Having an idea of what  type of company you want to work for shows that you've put thought into how you can apply the skills you'll acquire. 
+
+{% img [class]  /images/fork.png 400 [title text [alt text]] %}
+
+###4. Familiarize yourself with code
+The Flatiron school is a big commitment. While there are no programming pre-requisits for applying, you need to know that you'll love it. Nobody here minds spending long hours at school because we all enjoy what we're doing. Experience levels between students vary but one thing we all share is our love for learning code. 
+
+{% img  [class]  /images/computerguy.png 400 [title text [alt text]] %}
+
+###3. Have passions in your life
+The Flatiron School wants people who get excited about what they do. Show that you've invested considerable time and effort in another area of your life. What you're passionate about isn't important. Spending long days with people who gets heavily invested and excited about new things makes it a better envirnment for everyone. 
+
+{% img  [class]  /images/avi_dj2.png 400 [title text [alt text]] %}
+
+
+###2. Be a teacher
+I'm not sure if I've learned more from the instructor or the other students. The Flatiron School has an amazing learning envirnment because everyone here is willing to share their knowledge and show you how to be a better programmer. Not only should you be passionate about learning to code, you should be passionate about teaching others to code as well.  
+
+{% img  [class]  /images/kittens_explained.jpg 500  [title text [alt text]] %}
+
+###1. Have a cool story
+The Flatiron School's first semester accepted less than 15% of applicants and it's only going to get tougher. Wanting to learn how to code isn't enough, you need to make yourself stand out from the pack. They're interested in why you want to code and how you arrived at that decision. If you have a unique background or can tell a compelling story you'll have a much better chance of getting in.
+
+
+{% img  [class]  /images/poker.jpeg 300 200 [title text [alt text]] %}
