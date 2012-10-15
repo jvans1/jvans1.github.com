@@ -3,15 +3,9 @@
 # ----------------------- #
 
 url: http://jvans1.github.com
-<<<<<<< HEAD
 title: Vannablogs
 subtitle:
 author: James Vanneman
-=======
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
->>>>>>> source
 simple_search: http://google.com/search
 description:
 
