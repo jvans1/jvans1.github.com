@@ -25,3 +25,5 @@ Storing passwords in for your website can either be done using an existing frame
 
 
 Cryptography is hard to do well. Professionals spend enormous amounts of time and effor attemping to perfect these techniques and even they make mistakes. Depending on the service you're running, external services are going to be a safe bet. Financial or other services whose information is not trusted outside the organization are more likely to need their own methods. 
+
+####This blog was based off a cryptography talk given by John Downey. For more information and to see the talk check it out [here](http://www.confreaks.com/videos/1114-gogaruco2012-modern-cryptography)
