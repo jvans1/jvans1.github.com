@@ -1,0 +1,24 @@
+---
+layout: post
+title: "Basic Cryptography for Developers"
+date: 2012-10-16 14:48
+comments: true
+published: true
+categories:
+---
+
+##There are three major components to modern cryptography
+	###Encryption - Keeping something secret even if it's "seen" by a third party
+	###Authentication - Preserving the integrity of the message
+	###Identification - Finding out who sent the message
+
+{% img [class]  /images/vault.png 400 [title text [alt text]] %}
+
+
+##Encryption should allow a user to submit information across a network without risking message being read by a third party. Even if someone views thee message, they shouldn't be able to decode it. Keys are the only part of the encryption that needs to be kept secret. If an attacker knows the algorithms used to generate the encryption, they still won't be able to view the message without the key.
+
+##As a general guideline, it's best to use government standards when trying to protect information. Trying to create your own scripts will isn't a good idea. Edgecases are incredibly easy to overlook and testing for them is difficult. Experts frequently make mistakes and overlook these details. One common problem with encryption security arise from the lack of randomness of the encryption functions. Some random number generators aren't suited for cyptography because the [numbers they return aren't random](http://www.random.org/randomness/). As a result, the keys produced can be predicted. In Ruby, OpenSSL::Random is a reliable random number generator.
+
+##Hashes are commonly used to store sensitive information. This can be an issue if the hash function that generates the key doesn't prevent against a [length extension attack](http://en.wikipedia.org/wiki/Length_extension_attack). Hash functions such as MD5 and SHA1 are no longer recommended due partially to their succeptability to this type of attack. The information at the end of a hash key could be altered by the addition of data to the key. Any addition to the key overrides the data at the end. Attackers can add on to the hash key(and change the message) without actually decrypting it. Using a newer generation hash function such as a [SHA 2](http://en.wikipedia.org/wiki/SHA-2) prevents against this type of attack.
+
+##Depending on the service you're running, using 
