@@ -7,22 +7,24 @@ published: true
 categories:
 ---
 
-##There are three major components to modern cryptography
-	1.Encryption - Keeping something secret even if it's "seen" by a third party
-	2.Authentication - Preserving the integrity of the message
-	3.Identification - Finding out who sent the message
+There are three major components to modern cryptography  
+
+  1. *Encryption*- Keeping something secret even if it's viewed by a third party  
+  2. *Authentication*- Preserving the integrity of the message  
+  3. *Identification*- Finding out who sent the message  
 
 {% img [class]  /images/vault.png 400 [title text [alt text]] %}
 
 
-Encryption allows a user to submit information across a network without the risk of a third party reading their message. Algorithms help protect the data however the most important part of the encryption process is the private key. Keys are the only part of the encryption that need to be kept secret. If an attacker knows the algorithms used to generate the encryption, they still won't be able to view the message without the correct key.  		
+In this post I address the first component, encryption. Encryption allows a user to submit information across a network without the risk of a third party reading their message. Algorithms help protect the data however the most important part of the encryption process is the private key. Keys are the only part of the encryption that need to be kept secret. If an attacker knows the algorithms used to generate the encryption, they still won't be able to view the message without the correct key.  		
 
 Building your own encryption scripts is a bad idea. Government standards are good guidlines to follow since they are tested on a large scale. Writing these scripts can be difficult because edgecases are incredibly easy to overlook and testing for them is difficult. Even experts can make mistakes and overlook these types of details.
 
 One common problem with encryption security arise from the lack of randomness of the encryption functions. Some random number generators aren't suited for cyptography because the [numbers they return aren't random](http://www.random.org/randomness/). As a result, the keys produced can be predicted. In Ruby, OpenSSL::Random is a reliable random number generator.  		
 
 Along with keys, hash functions are used to encrypt the information. One area of instabillity amongst older hash functions is from a [length extension attack](http://en.wikipedia.org/wiki/Length_extension_attack). MD5 and SHA1 are two functions that are no longer recommended, due partially to their succeptability to this type of attack. If an attacker can view the internal state of a hash function, they just need to continue the function from there and append their information to the end of the message. The instability arises since the appended part of the message is given preference over the value before it. For example:
-				"Acct#=414&&balance=1000" can be changed to "Acct#=414&&balance=1000balance=25000". 
+
+    "Acct#=414&&balance=1000" => "Acct#=414&&balance=1000balance=25000"
 
 Using a newer generation hash function such as a [SHA 2](http://en.wikipedia.org/wiki/SHA-2) prevents against this type of attack. 
 
