@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Cryptography for Developers"
+title: "Basic Cryptography For Developers"
 date: 2012-10-16 14:48
 comments: true
 published: true
@@ -24,4 +24,4 @@ categories:
 	Storing passwords in for your website can either be done using an existing framework or deligated to third party. Websites like facebook and google are two third parties that can be used to verify a user account. If you intend on building the storage yourself, ruby on rails includes frameworks such as devise to accomplish this. Depending on the level of privacy needed for your application, a third party host is a convenient and reliable option to store passwords.
 
 
-	Cryptography is hard to well. Professionals spend enormous amounts of time and effor attemping to perfect these techniques and even they make mistakes. Depending on the service you're running, external services are going to be a safe bet. Financial or other services whose information is not trusted outside the organization are more likely to need their own methods. 
+	Cryptography is hard to do well. Professionals spend enormous amounts of time and effor attemping to perfect these techniques and even they make mistakes. Depending on the service you're running, external services are going to be a safe bet. Financial or other services whose information is not trusted outside the organization are more likely to need their own methods. 
