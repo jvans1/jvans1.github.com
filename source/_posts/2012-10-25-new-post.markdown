@@ -1,0 +1,67 @@
+---
+layout: post
+title: "Using Detect vs Select"
+date: 2012-10-25 09:51
+comments: true
+published: true
+categories: 
+---
+
+Detect and Select are very useful replacements to the each function in ruby. At first glance the methods are very similar but they have some key distinctions that make them useful in different situations. 
+
+Select takes blocks that can contain inequalities and returns new arrays based on them. If a single element is selected, it will return a 1 item array of that element.
+
+    array = [1,2,3,4,5]
+    array.select{|a| a>3}  => [4,5]
+    array.select{|a| a==3} => [3]
+
+Detect only returns single values from an array that match the block. If an inequality is passed in it will return the first matching value. The detect function does not return an array, just the value that matches the block.
+    array = [1,2,3,4,5]
+    array.detect{|a| a==3} => 3
+    array.detect{|a| a>3}  => 4
+
+When no item is matched they return the following:
+
+    array = [1,2,3,4,5]
+    array.select{|a| a>5}  => []
+    array.detect{|a| a==6}  => nil
+
+
+Detect and select are great alternatives to the each method and can produce much cleaner, more readable code. I recently wrote code to parse a song playlist and return to me the artist and their song. If an artist didn't exist, I wanted to create a new instance of that class. However if an instance of that artist had already been created, I wanted to return that object. I achieved this using the each method with the following code:
+
+    def assign_artist(artist_name)
+      unless Artist.all.length > 0
+        Artist.new.tap{|artist| artist.name = artist_name} 
+      else
+        Artist.all.each do |artist| 
+          if artist.name == artist_name
+            return artist
+          else
+            next
+          end
+        end
+        Artist.new.tap{|artist| artist.name = artist_name}
+      end
+    end
+
+That's a lot of code that takes a bit of work to understand what is going on. Thankfully the detect and select method can make this much cleaner. Since detect can return a falsy value, it's more useful in a conditional block than select. The code can be refactored to a much cleaner version using detect.
+
+    def assign_artist(artist_name)
+      if  artist = Artist.all.detect{|artist| artist.name == artist_name} 
+        artist
+      else
+        Artist.new.tap{|artist| artist.name = artist_name}
+      end
+    end
+
+
+The same code written with select would be:
+
+    artist = Artist.all.select{|artist| artist.name == artist_name} 
+    if  artist.length > 0
+        artist[0]
+    else
+
+
+
+Depending on how you want to manipulate your data, select can also be very useful. Compared to the original each block, both select and detect write much more readable code. The differences between the two are sublt but very important to understand in order to use them well. 
