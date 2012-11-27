@@ -1,13 +1,13 @@
 ---
 layout: post
-title: "Using Detect vs Select"
+title: "Using Detect and Select"
 date: 2012-10-25 09:51
 comments: true
 published: true
 categories: 
 ---
 
-Detect and Select are very useful replacements to the each function in ruby. At first glance the methods are very similar but they have some key distinctions that make them useful in different situations. 
+If you find yourself writing each blocks that contain a lot of logic, you can probably simplify your code. Detect and select are higher level iterators that can take complicated each statements and transform them into something much more concise. At first glance the methods are very similar but they have some key distinctions that make them useful in different situations. 
 
 Select takes blocks that can contain inequalities and returns new arrays based on them. If a single element is selected, it will return a 1 item array of that element.
 
@@ -27,7 +27,7 @@ When no item is matched they return the following:
     array.detect{|a| a==6}  => nil
 
 
-Detect and select are great alternatives to the each method and can produce much cleaner, more readable code. I recently wrote code to parse a song playlist and return to me the artist and their song. If an artist didn't exist, I wanted to create a new instance of that class. However if an instance of that artist had already been created, I wanted to return that object. I achieved this using the each method with the following code:
+Select and detect help you avoid having to write complicated each blocks. I recently wrote code to parse a song playlist and return to me the artist and their song. If an artist didn't exist, I wanted to create a new instance of that class. However if an instance of that artist had already been created, I wanted to return that object. I achieved this using the each method with the following code:
 
     def assign_artist(artist_name)
       unless Artist.all.length > 0
@@ -44,7 +44,18 @@ Detect and select are great alternatives to the each method and can produce much
       end
     end
 
-That's a lot of code that takes a bit of work to understand what is going on. Thankfully the detect and select method can make this much cleaner. Since detect can return a falsy value, it's more useful in a conditional block than select. The code can be refactored to a much cleaner version using detect.
+That's a lot of code that isn't easy to understand right away. Thankfully the detect and select method can make this much nicer. Using select the code becomes:
+
+    def assign_artist(artist_name)
+      artist = Artist.all.select{|artist| artist.name == artist_name} 
+      if  artist.length > 0
+          artist[0]
+      else
+          Artist.new.tap{|artist| artist.name = artist_name}
+        end
+      end
+
+Since detect can return a falsy value, it's more useful in a conditional block than select. The code can be refactored to a much cleaner version using detect.
 
     def assign_artist(artist_name)
       if  artist = Artist.all.detect{|artist| artist.name == artist_name} 
@@ -55,13 +66,4 @@ That's a lot of code that takes a bit of work to understand what is going on. Th
     end
 
 
-The same code written with select would be:
-
-    artist = Artist.all.select{|artist| artist.name == artist_name} 
-    if  artist.length > 0
-        artist[0]
-    else
-
-
-
-Depending on how you want to manipulate your data, select can also be very useful. Compared to the original each block, both select and detect write much more readable code. The differences between the two are sublt but very important to understand in order to use them well. 
+Compared to the original each block, both refactorings are much more readable. The differences between the two are subtle but important to understand in order to use them effectively. The detect and select methods can be incredibly useful and help you avoid writing lots of logic within each statements.

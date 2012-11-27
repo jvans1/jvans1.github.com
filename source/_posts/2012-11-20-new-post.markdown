@@ -1,0 +1,40 @@
+---
+layout: post
+title: "Wrapping a Lagacy Database With Active Record"
+date: 2012-11-20 07:54
+comments: true
+published: true
+categories: 
+---
+
+
+Over the last 5 years I played over two million hands of poker. The software I used to track my winnings stored this information in postgresql. I decided to create a rails app from this database and the first thing I needed to do was wrap active record around it. I was pleasantly surprised how easy this was to accomplish. Since I wanted to create my app on a mac, and the database was on a PC, a few additional steps were required but it was still quite simple. 
+
+  1.  Extract the database 
+  2.  Reimport the database 
+  3.  Edit the database.yml file 
+  4.  Set table names and primary keys in classes 
+
+To extract the database, I ran ```pg_dump.exe -U holdemmanager -Fc > db.sql```. The -Fc flag isn't necessary but I found without the flag, the db.sql wasn't formatted properly for the db_restore function(used later). It's also nice because it automatically compressed the file which changed my db.sql from 10 gigs to 1. The command exports the database into raw sql statements which are later used to recreate the original database.
+
+Reversing the export, I ran
+```-pg_restore db.sql -d poker2 -h localhost -v -c``` on my mac. This command uncompresses the file and restores the database.
+
+Legacy databases might not conform to active record conventions so you need to tell AR models what table they correspond to and the primary key of the table.
+
+{% img [class]  /images/hh_wrap.png 400 [title text [alt text]] %}
+
+After active record knows what models the tables are associated with, you need to setup the association between the models. In my case, the gametype model happened to follow AR conventions so setting up the association was no different than a normal rails app. In other instances such as the hand model, I needed to tell active record what foreign keys were used so it could find the appropriate relationship.
+
+
+The next step was to change the database.yml file so rails knows where to look for the data. This is what my file looks like:
+
+{% img [class]  /images/pgdb.png 350 [title text [alt text]] %}
+
+It's important to pay close attention to the timeout setting in this file. Postgres is very sensitive to queries that take too long and if the database is large, it will disconnect you. Adding additional time to the timeout field is a start but won't prevent postgres from disconnecing on large queries. Since my database had over 2 million rows, I ran into this problem a lot. 
+
+Using ruby's find_each(:batch_size => num_rows) method is a convenient way to get around this problem. The method will load the number of rows you specify into memory, and then pass the individual rows into a block, repeating this process until all the rows in your database are processed.
+
+{% img [class]  /images/find_each.png 500 [title text [alt text]] %}
+
+ I figured out the exact process though a little trial and error but after having done this once, I could easily repeat it in half the time. Wrapping a legacy database with active record can seem intimidating at first but breaking it down into small steps make the entire process much more managable. 
