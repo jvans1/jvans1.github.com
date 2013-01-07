@@ -17,7 +17,7 @@ The first thing you need to do is export your database on your local machine. I 
 
 After you create a new bucket on s3, uploading is a pretty straightforward process. When the upload is complete, it's important to remember to change your permissions settings on s3. The default settings will throw an error when you try to import with heroku. If you change the settings to everyone, heroku will have access to the data.
 
-{% img [class]  /images/permissions.png 400 [title text [alt text]] %}
+{% img [class]  /images/permissions.png 500 [title text [alt text]] %}
 
 Once the file is uploaded to s3 and the permissions are set, you can tell heroku to restore the database from the url to the s3 file. 
         heroku pgbackups:restore DATABASE 'https://url.tomydatabase.com'
