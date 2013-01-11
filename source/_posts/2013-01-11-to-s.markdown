@@ -1,0 +1,66 @@
+---
+layout: post
+title: "The ``to_s`` and ``to_str`` methods"
+date: 2013-01-11 01:08
+comments: true
+published: true
+categories: 
+---
+
+In ruby you can usually get a pretty good idea of what a method does by its name. I got confused when I saw the two methods to_s and to_str which intuitively seem like they both would cast an object to a string. Obviosly ruby wouldn't have two methods that do the exact same thing so I decided to figure out what the differences were. 
+
+
+The to_s method returns a string representation of the object. Lets look at some examples
+```ruby 
+1.to_s => "1"
+[1,2,3].to_s => "[1,2,3]"
+class Person;end
+Person.new.to_s => "#<Person:0x007fa8f4173ed8>"
+```
+So how do these objects respond to to_str?
+
+```ruby
+1.to_str => NoMethodError: "undefined method to_str for 1:Fixnum"
+[1,2,3].to_str => NoMethodError: "undefined method to_str for [1, 2, 3]:Array"
+Person.new.to_str => NoMethodError: "undefined method to_str for [1, 2, 3]:Person"
+
+```
+None of these objects respond to to_str, so what does it do? It turns out that to_str method is a method that ruby calls when it <em>expects</em> an object to be a string and is not. For example when I write ```"String" + Object.new```, ruby will call to_str on Object.new to find it's string representation. Lets see how we can use this in our code.
+
+```ruby
+"string" + 1 => TypeError: "can't convert Fixnum into String"
+"string" + [1,2,3] => TypeError: "can't convert Array into String"
+"string" + Person.new => TypeError: "can't convert Person into String"
+
+class Integer
+  def to_str
+    to_s
+  end
+end
+
+"string " + 1 => "string 1"
+"string " << 1 => "string 1"
+class Array 
+  def to_str
+    to_s
+  end
+end
+
+"string " + [1,2,3] => "string [1,2,3]"
+
+class Person
+  attr_accessor :name
+  def to_str
+    name
+  end
+end
+james = Person.new
+james.name = "James Vanneman"
+"string " + james => "string James Vanneman"
+"string " << james => "string James Vanneman"
+```
+
+The to_str method is implicity called whenever you try to perform a method on a string with an arguement that isn't a string. You can define this method however you want as in the ```Person``` class example, I had the to_str return the name of the object.
+
+While their method names imply similar behavior, there are big differences between them. Defining to_str in your classes makes it easy to perform operations between strings and your objects. 
+
