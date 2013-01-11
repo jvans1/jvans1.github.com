@@ -47,6 +47,7 @@ class Array
 end
 
 "string " + [1,2,3] => "string [1,2,3]"
+"string " << [1,2,3] => "string [1,2,3]"
 
 class Person
   attr_accessor :name
@@ -60,7 +61,7 @@ james.name = "James Vanneman"
 "string " << james => "string James Vanneman"
 ```
 
-The to_str method is implicity called whenever you try to perform a method on a string with an arguement that isn't a string. You can define this method however you want as in the ```Person``` class example, I had the to_str return the name of the object.
+The to_str method is implicity called whenever you try to perform a method on a string with an arguement that isn't a string. You can define this method however you want as in the ```Person``` class example, I had the ```to_str``` method return the name of the object.
 
 While their method names imply similar behavior, there are big differences between them. Defining to_str in your classes makes it easy to perform operations between strings and your objects. 
 
