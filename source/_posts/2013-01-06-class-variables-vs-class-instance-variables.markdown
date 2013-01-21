@@ -68,7 +68,7 @@ bz1 = BusinessAccount.new
 bz2 = BusinessAccount.new
 BankAccount.total_accounts => 1
 BusinessAccount.total_accounts => 2 
-BusinessAccount.total_accounts => 1 
+BankAccount.total_accounts => 1 
 ```
 
 Since ```BusinessAccount``` Inherits from ```BankAccount```, it gets all of the methods for keeping track of the number of accounts created. The big advantage here lies in the difference between scope of class variables and instance variables. Since instance variables aren't shared between objects they're confined to their respective classes and keep count independantly. A big win by both using less code and avoiding mixing variables unintentionally. 
